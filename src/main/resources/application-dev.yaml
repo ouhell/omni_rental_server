@@ -5,8 +5,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/omni_rental_db
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 10MB
+      max-file-size: 1MB
 springdoc:
   swagger-ui:
     path: /swagger-docs
-

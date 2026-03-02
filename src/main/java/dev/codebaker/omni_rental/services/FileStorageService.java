@@ -1,18 +1,18 @@
 package dev.codebaker.omni_rental.services;
 
 import dev.codebaker.omni_rental.controllers.v1.dto.responses.FileResponse;
-import dev.codebaker.omni_rental.dto.FetchedFileData;
+import dev.codebaker.omni_rental.dto.StoredFileData;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
-public interface FileUploadService {
-
-    FileResponse uploadFile(MultipartFile file);
-    FileResponse uploadFile(MultipartFile file,boolean temporary);
-
-    FetchedFileData getFile(String key);
+public interface FileStorageService {
 
 
+    StoredFileData storeFile(MultipartFile file);
+
+    StoredFileData storeFile(InputStream inputStream, String fileName);
+
+    InputStreamResource fetchFile(String key);
 }
