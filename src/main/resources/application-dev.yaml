@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    username: omni_renter
+    password: omni_renter
+    url: jdbc:postgresql://localhost:5432/omni_rental_db
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+springdoc:
+  swagger-ui:
+    path: /swagger-docs
+

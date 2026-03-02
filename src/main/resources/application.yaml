@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: omni_rental
+  profiles:
+    active: dev
