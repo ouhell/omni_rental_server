@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                             "/v3/api-docs/**",
                                 "/swagger-docs"
                     ).permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
 
         );
 
