@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env.properties[.properties]
   datasource:
     username: omni_renter
     password: omni_renter
@@ -14,3 +16,8 @@ spring:
 springdoc:
   swagger-ui:
     path: /swagger-docs
+aws:
+  s3:
+    bucket: rental-bucket
+    access-key-id: 1KZQZLntlt6djAxonvcDi+qQzKpmgCVr
+    access-key-secret: FjTFye7PrrPjEuZpFPsSFDVcSxhrX2QDaIIBacc0W5Y=
