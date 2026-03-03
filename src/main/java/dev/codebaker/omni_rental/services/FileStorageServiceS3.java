@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Service("s3")
 @Primary
 @RequiredArgsConstructor
-public class FileStorageServiceS3 implements FileStorageService {
+public  class FileStorageServiceS3 implements FileStorageService {
     private final S3Client s3;
     private final String STORAGE = "s3";
 
@@ -56,5 +57,11 @@ public class FileStorageServiceS3 implements FileStorageService {
         return new InputStreamResource(resp);
 
 
+    }
+
+    @Override
+    public void removeFile(String key) {
+        DeleteObjectRequest  deleteObjectRequest  =  DeleteObjectRequest.builder().bucket(bucketName).key(key).build();
+        s3.deleteObject(deleteObjectRequest);
     }
 }

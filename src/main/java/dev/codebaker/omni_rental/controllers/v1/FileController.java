@@ -39,6 +39,13 @@ public class FileController {
 
          return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+
+    @DeleteMapping("/{key}")
+    public ResponseEntity<Void> delete(@PathVariable String key) {
+         this.fileUploadService.deleteFile(key);
+
+         return ResponseEntity.noContent().build();
+    }
     
     
     
