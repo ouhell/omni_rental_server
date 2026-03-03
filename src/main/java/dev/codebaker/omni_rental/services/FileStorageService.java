@@ -12,7 +12,7 @@ public interface FileStorageService {
 
     StoredFileData storeFile(MultipartFile file);
 
-    StoredFileData storeFile(InputStream inputStream, String fileName);
+    StoredFileData storeFile(InputStream inputStream, String fileName,long size);
 
     InputStreamResource fetchFile(String key);
 }

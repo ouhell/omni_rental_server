@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### environment ###
-.env
+.env.properties
 
 ### file storage ###
 /files/

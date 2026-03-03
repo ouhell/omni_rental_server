@@ -35,14 +35,14 @@ public class FileStorageServiceLocal implements FileStorageService {
     @Override
     public StoredFileData storeFile(MultipartFile file) {
         try {
-            return storeFile(file.getInputStream(),file.getOriginalFilename());
+            return storeFile(file.getInputStream(),file.getOriginalFilename(),file.getSize());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public StoredFileData storeFile(InputStream inputStream, String fileName) {
+    public StoredFileData storeFile(InputStream inputStream, String fileName,long size) {
         String uploadedFileName = UUID.randomUUID().toString() +  "." + StringUtils.getFilenameExtension(fileName);
         try {
             Files.copy(inputStream, Path.of(UPLOAD_PATH.toString(),uploadedFileName));
