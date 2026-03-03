@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -58,6 +59,23 @@ public class FileStorageServiceLocal implements FileStorageService {
             return new InputStreamResource(Files.newInputStream(UPLOAD_PATH.resolve(key)));
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+        }
+    }
+
+    @Override
+    public void removeFile(String key) {
+          Path filePath = UPLOAD_PATH.resolve(key);
+          File file = new File(filePath.toUri());
+
+          if(!file.exists()) {
+              throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+          }
+
+
+        try {
+            Files.delete(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

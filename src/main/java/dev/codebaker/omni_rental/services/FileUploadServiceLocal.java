@@ -75,5 +75,16 @@ public class FileUploadServiceLocal implements FileUploadService {
 
     }
 
+    @Override
+    @Transactional
+    public void deleteFile(String key) {
+        var uploadedFile = uploadedFileRepository.findByKey(key).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        uploadedFileRepository.delete(uploadedFile);
+
+        fileStorageService.removeFile(key);
+
+    }
+
 
 }

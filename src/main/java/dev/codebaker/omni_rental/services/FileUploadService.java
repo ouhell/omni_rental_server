@@ -14,5 +14,6 @@ public interface FileUploadService {
 
     FetchedFileData getFile(String key);
 
+    void deleteFile(String key);
 
 }

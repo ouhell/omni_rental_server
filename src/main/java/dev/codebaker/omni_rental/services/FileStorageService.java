@@ -15,4 +15,6 @@ public interface FileStorageService {
     StoredFileData storeFile(InputStream inputStream, String fileName,long size);
 
     InputStreamResource fetchFile(String key);
+
+    void removeFile(String key);
 }
