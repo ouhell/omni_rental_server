@@ -18,6 +18,6 @@ springdoc:
     path: /swagger-docs
 aws:
   s3:
-    bucket: rental-bucket
+    bucket: ${AWS_BUCKET_NAME}
     access-key-id: ${AWS_ACCESS-KEY_ID}
     access-key-secret: ${AWS_ACCESS-KEY_SECRET}

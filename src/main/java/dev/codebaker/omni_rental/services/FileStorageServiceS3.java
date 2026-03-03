@@ -13,16 +13,23 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Service("s3")
 @Primary
 @RequiredArgsConstructor
-public  class FileStorageServiceS3 implements FileStorageService {
+public  class FileStorageServiceS3 implements DynamicFileStorageService {
+    private final Region region;
     private final S3Client s3;
+    private final S3Presigner presigner;
     private final String STORAGE = "s3";
 
     @Value("${aws.s3.bucket}")
@@ -63,5 +70,19 @@ public  class FileStorageServiceS3 implements FileStorageService {
     public void removeFile(String key) {
         DeleteObjectRequest  deleteObjectRequest  =  DeleteObjectRequest.builder().bucket(bucketName).key(key).build();
         s3.deleteObject(deleteObjectRequest);
+    }
+
+    @Override
+    public String createPresignedURL(String key) {
+        GetObjectRequest getObjectRequest =  GetObjectRequest.builder().bucket(bucketName).key(key).build();
+        GetObjectPresignRequest getObjectPresignRequest = GetObjectPresignRequest.builder()
+                .signatureDuration(Duration.of(20, ChronoUnit.MINUTES))
+                .getObjectRequest(getObjectRequest)
+                .build();
+        PresignedGetObjectRequest presignedGetObjectRequest = presigner.presignGetObject(getObjectPresignRequest);
+
+        return presignedGetObjectRequest.url().toString();
+
+        
     }
 }

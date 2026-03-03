@@ -46,8 +46,13 @@ public class FileController {
 
          return ResponseEntity.noContent().build();
     }
-    
-    
+
+    @GetMapping("/{key}/presigned")
+    public ResponseEntity<java.lang.String> get(@PathVariable String key) {
+        var url = fileUploadService.getPresignedUrl(key);
+
+        return ResponseEntity.ok(url);
+    }
     
     
 }
