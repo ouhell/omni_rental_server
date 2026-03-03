@@ -7,6 +7,7 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 
 import java.net.URI;
 
@@ -29,6 +30,19 @@ public class AwsS3Config {
                         AwsBasicCredentials.create(accessKeyId, accessKeySecret)
                 ))
                 .region(region)
+                .build();
+    }
+
+    @Bean
+    public S3Presigner  s3Presigner(S3Client s3Client, @Value("${aws.s3.bucket}") String bucket,
+                                    @Value("${aws.s3.access-key-id}") String  accessKeyId,
+                                    @Value("${aws.s3.access-key-secret}")  String accessKeySecret,
+                                    Region region) {
+        return S3Presigner.builder().region(region)
+                .endpointOverride(URI.create("https://s3.cubbit.eu"))
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(accessKeyId, accessKeySecret)
+                ))
                 .build();
     }
 }

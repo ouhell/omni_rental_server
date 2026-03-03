@@ -26,7 +26,7 @@ import java.util.UUID;
 public class FileUploadServiceLocal implements FileUploadService {
     private final UploadedFileMapper uploadedFileMapper;
     private final UploadedFileRepository   uploadedFileRepository;
-    private final FileStorageService fileStorageService;
+    private final DynamicFileStorageService fileStorageService;
 
 
 
@@ -84,6 +84,11 @@ public class FileUploadServiceLocal implements FileUploadService {
 
         fileStorageService.removeFile(key);
 
+    }
+
+    @Override
+    public String getPresignedUrl(String key) {
+        return fileStorageService.createPresignedURL(key);
     }
 
 

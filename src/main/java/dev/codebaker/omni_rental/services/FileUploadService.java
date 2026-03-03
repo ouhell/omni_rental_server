@@ -16,4 +16,7 @@ public interface FileUploadService {
 
     void deleteFile(String key);
 
+    String getPresignedUrl(String key);
+
+
 }
