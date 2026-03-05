@@ -1,13 +1,11 @@
 spring:
-  config:
-    import: optional:file:.env[.properties]
   datasource:
-    username: omni_renter
-    password: omni_renter
-    url: jdbc:postgresql://localhost:5432/omni_rental_db
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   servlet:
     multipart:
       enabled: true

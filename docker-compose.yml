@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  
+  omni-rental:
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - ~/.m2:/root/.m2
+    ports:
+      - "8080:8080"
+    environment:
+      - MAVEN_OPTS=-Xmx512m
+      - SPRING_PROFILES_ACTIVE=dev
+      - POSTGRES_HOST=postgres
+    command: mvn spring-boot:run 
+    # restart: unless-stopped
+    networks:
+      - omni-network-rental
+
+
+  postgres:
+    image: postgres:15
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - omni-network-rental
+
+volumes:
+  pgdata:
+networks:
+  omni-network-rental:
+    driver: bridge
