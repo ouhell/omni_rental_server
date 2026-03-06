@@ -1,28 +1,12 @@
-# Development Dockerfile for Omni Rental with hot reload
-# Uses Maven image with Java 17 and includes spring-boot-devtools for automatic restart
+FROM maven:3.9.5-eclipse-temurin-21
 
-FROM maven:3.9.5-eclipse-temurin-21 AS base
+WORKDIR /app
 
-# create app directory
-WORKDIR /usr/src/app
+# copy pom only for dependency caching
+COPY pom.xml .
 
-# copy pom.xml first to download dependencies
-COPY pom.xml ./
-
-
-
-# download dependencies (will be cached unless pom changes)
 RUN mvn dependency:go-offline -B
 
-# copy the source code
-COPY src ./src
-
-RUN mvn clean install -DskipTests
-
-
-
-# expose port
 EXPOSE 8080
 
-# by default run in development mode with spring boot run
 CMD ["mvn", "spring-boot:run"]
