@@ -14,6 +14,6 @@ public class GeneralController {
 
     public ResponseEntity<String> get() {
 
-        return ResponseEntity.ok("1.0.0-SNAPSHOT");
+        return ResponseEntity.ok("1.0.5-SNAPSHOT");
     }
 }
